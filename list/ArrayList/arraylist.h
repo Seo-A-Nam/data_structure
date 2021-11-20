@@ -1,6 +1,16 @@
 #ifndef _ARRAYLIST_
 #define _ARRAYLIST_
 
+/*
+*** include
+*/
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+/*
+*** Array List Struct
+*/
 typedef struct ArrayListNodeType
 {
 	int data;
