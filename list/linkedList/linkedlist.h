@@ -1,6 +1,10 @@
 #ifndef _LINKEDLIST_
 #define _LINKEDLIST_
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
 typedef struct ListNodeType
 {
 	int data;
@@ -18,14 +22,17 @@ typedef struct LinkedListType
 링크드리스트를 생성하여 그 포인터를 반환하는 함수
 */
 LinkedList* createLinkedList();
+
 /*
 pList의 원하는 위치(position)에 노드(element)를 삽입하는 함수
 */
 int addLLElement(LinkedList* pList, int position, ListNode element);
+
 /*
 pList의 원하는 위치(position)에 있는 노드(element)를 제거하는 함수
 */
 int removeLLElement(LinkedList* pList, int position);
+
 /*
 pList의 원하는 위치(position)에 있는 노드(element)를 가져오는 함수
 */
@@ -45,6 +52,7 @@ int getLinkedListLength(LinkedList* pList);
 pList를 free()해서 링크드리스트를 삭제하는 함수
 */
 void deleteLinkedList(LinkedList* pList);
+
 #endif
 
 #ifndef _COMMON_LIST_DEF_
