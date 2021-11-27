@@ -74,7 +74,7 @@ void    removeDLElement_test()
     DoublyList      *ls = NULL;
     int             index;
 
-    printf("\nThis is the Test for DoublyList Node remove at particular position\n\n");
+    printf("\nThis is the Test for DoublyList Node elimination at particular position\n\n");
     ls = makeEXDoublyList(ls, 5);
     printDoublyList(ls);
     printf("\n\n");

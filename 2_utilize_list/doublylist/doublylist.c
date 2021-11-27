@@ -103,7 +103,7 @@ void clearDoublyList(DoublyList* pList)
 		pList->currentElementCount--;
 		node = node->pRLink;
 	}
-}
+} // 변경해야하나? 노드 전부 삭제하는 함수로.
 
 int getDoublyListLength(DoublyList* pList)
 {
@@ -185,4 +185,8 @@ void reverseDoublyLinkedList(DoublyList *pList) {
 		ed = ed->pLLink;
 	}
 	displayDoublyList(pList);
-}
+} 
+// 각 노드의 pRLink와 pLLink의 포인터 값을 서로 바꿔준다.
+// (모든 노드에 대해 이것만 댜 하면, 결국 역순으로 뒤짚어짐)
+// 이 함수 node, tmp, prev의 노드 포인터 변수로 할 수 있도록 혼자 고치기.
+// 단일 리스트로 구현해야했나?
