@@ -50,7 +50,7 @@ void    deleteDoublyList_test()
 {
     DoublyList  *ls = NULL;
 
-    printf("\nThis is the Test for DoublyList delete\n\n");
+    printf("\nThis is the Test for DoublyList deletion\n\n");
     ls = makeEXDoublyList(ls, 5);
     printf("DoublyList : [%p]\n", ls);
     printDoublyList(ls);

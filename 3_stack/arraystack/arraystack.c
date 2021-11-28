@@ -128,7 +128,7 @@ int isArrayStackEmpty(ArrayStack* pStack)
     {
         return (ERROR);
     }
-  	if (pStack->currentElement == 0)
+  	if (pStack->currentElementCount == 0)
     {
     	return (TRUE);
     }
