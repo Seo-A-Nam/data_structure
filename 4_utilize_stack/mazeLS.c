@@ -132,7 +132,7 @@ void	      findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosit
     if (HEIGHT > py && py >= 0 && WIDTH > px && px >= 0)
     { // check if the value is in the range of the given map.
       if (mazeArray[py][px] == 0)
-      {
+      { // check if the next position is on available path.
           MapPosition current; // the next position that we'll step in.
           memset(&current, 0, sizeof(MapPosition));
           current.dx = px;
