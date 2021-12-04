@@ -27,6 +27,7 @@ int     mazeArray[HEIGHT][WIDTH] =
     {1, 0, 0, 0, 0, 0, 0, 0},
     {1, 1, 1, 1, 1, 1, 1, 0}
 }; // a Map of the Maze
+// 1 is the wall which you cannot go through, while 0 is the available way.
 
 
 int     find_flag = 0;
@@ -128,11 +129,11 @@ void	      showPath(LinkedStack *pStack, int mazeArray[HEIGHT][WIDTH])
 
     (void)mazeArray;
 	  printf("This is a path of the Maze\n\n");
+    printf("(S : South   N : North   W : West   E : East)\n");
   	p = pStack->pTopElement;
     printf("\nSTART ->\n\n");
     printLS_rev(p);
     printf("\nEND <-\n\n");
-    printf("\n\n>> The way which has 2 printed, is the path to go through the maze.\n\n");
     for (int i = 0; i < HEIGHT; i++)
     {
       for (int j = 0; j < WIDTH; j++)
@@ -158,7 +159,6 @@ void	      showPath(LinkedStack *pStack, int mazeArray[HEIGHT][WIDTH])
       }
       printf("\n");
     }
-    printf("\n\n** 1 is the wall which you cannot go through, while 0 is the available way.\n");
 }
 
 void	      findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosition endPos, LinkedStack *pStack)
