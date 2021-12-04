@@ -29,8 +29,6 @@ int     mazeArray[HEIGHT][WIDTH] =
 }; // a Map of the Maze
 // 1 is the wall which you cannot go through, while 0 is the available way.
 
-
-int     find_flag = 0;
 int     path_count = 0;
 
 LinkedStack*  createLinkedStack()
@@ -168,7 +166,6 @@ void	      findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosit
 {
   if (pStack->pTopElement->dx == endPos.dx && pStack->pTopElement->dy == endPos.dy)
   {
-    find_flag = 1;
     showPath(pStack, mazeArray);
     return ;
   } // if you succeed to find a path, then print that path and return.
@@ -192,7 +189,8 @@ void	      findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosit
           pushLSMapPosition(pStack, current); // write your next position on the stack, before stepping into it.
           course_map[y][x] = cardinal_point[i]; // write the direction of path on a course map
           mazeArray[py][px] = 2; // write your next position on the map, before stepping into it.
-          findPath(mazeArray, startPos, endPos, pStack); // call the fuction recursively (step into the next position)
+          findPath(mazeArray, startPos, endPos, pStack);
+          // call the fuction recursively (step into the next position)
           course_map[y][x] = '0'; // erase the direction of path from a course map
           mazeArray[py][px] = 0; // erase that bad path from the map.
           MapPosition *delNode = NULL;
@@ -234,7 +232,7 @@ int main(void)
     pushLSMapPosition(p, startPos); // since p is null rn, let's first put startPos in the stack.
     findPath(mazeArray, startPos, endPos, p);
     mazeArray[startPos.dy][startPos.dx] = 0;
-    if (find_flag == 0)
+    if (path_count == 0)
         printf("Cannot find any path of the maze\n");
     printf("\n==================================================================\n\n");
     deleteLinkedStack(p);
