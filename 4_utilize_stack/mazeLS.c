@@ -20,7 +20,7 @@ int     mazeArray[HEIGHT][WIDTH] =
 {
     {0, 0, 1, 1, 1, 1, 1, 1},
     {1, 0, 0, 0, 0, 0, 0, 1},
-    {1, 1, 1, 0, 1, 1, 1, 1},
+    {1, 1, 0, 0, 1, 1, 1, 1},
     {1, 1, 1, 0, 1, 1, 1, 1},
     {1, 0, 0, 0, 0, 0, 0, 1},
     {1, 0, 1, 1, 1, 1, 1, 1},
@@ -31,6 +31,7 @@ int     mazeArray[HEIGHT][WIDTH] =
 
 
 int     find_flag = 0;
+int     path_count = 0;
 
 LinkedStack*  createLinkedStack()
 {
@@ -128,7 +129,9 @@ void	      showPath(LinkedStack *pStack, int mazeArray[HEIGHT][WIDTH])
   	MapPosition	*p; 
 
     (void)mazeArray;
-	  printf("This is a path of the Maze\n\n");
+    printf("\n==================================================================\n\n");
+    path_count++;
+	  printf("This is a path of the Maze %d\n\n", path_count);
     printf("(S : South   N : North   W : West   E : East)\n");
   	p = pStack->pTopElement;
     printf("\nSTART ->\n\n");
