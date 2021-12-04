@@ -1,18 +1,5 @@
 #include "linkedstack.h"
-
-/*
-typedef struct StackNodeType
-{
-	char data;
-	struct StackNodeType* pLink;
-} StackNode;
-
-typedef struct LinkedStackType
-{
-	int currentElementCount;	// ���� ������ ����
-	StackNode* pTopElement;		// Top ����� ������
-} LinkedStack;
-*/
+#include "unistd.h"
 
 static void displayLS(LinkedStack* pStack)
 {
@@ -25,140 +12,77 @@ static void displayLS(LinkedStack* pStack)
     }
 }
 
-void    createLinkedStack_test()
-{
-    LinkedStack *pStack = NULL;
-
-    printf("\nThis is the Test for LinkedStack creation\n\n");
-    pStack = createLinkedStack();
-    printf("LinkedStack : [%p]\ncurrentElementCount : %d\n", pStack, pStack->currentElementCount);
-}
-
-void    pushLS_test()
-{
-    LinkedStack *pStack = NULL;
-
-    printf("\nThis is the Test for push() on LinkedStack\n\n");
-    pStack = createLinkedStack();
-    for (int i = 0; i < 5; i++)
-    {
-        StackNode ele;
-        ele.data = i;
-        pushLS(pStack, ele);
-        printf("%dst push() :\n", i + 1);
-        displayLS(pStack);
-        printf("\n\n");
-    }
-    printf("\n");
-}
-
-void    popLS_test()
-{
-    StackNode   *pStack = NULL;
-
-    printf("\nThis is the Test for pop() on LinkedStack\n\n");
-    pStack = createLinkedStack();
-    printf("Before pop() : \n");
-    for (int i = 0; i < 5; i++)
-    {
-        StackNode ele;
-        ele.data = i;
-        pushLS(pStack, ele);
-    }
-    displayLS(pStack);
-    printf("\n\n");
-    for (int i = 0; i < 5; i++)
-    {
-        StackNode *ele2;
-        ele2 = popLS(pStack);
-        printf("%dst pop() : %c\n\n", i + 1, ele2->data);
-        displayLS(pStack);
-        printf("\n\n");
-    }
-    printf("\n\n");
-}
-
-void    peekLS_test()
-{
-    StackNode   *pStack = NULL;
-
-    printf("\nThis is the Test for pop() on LinkedStack\n\n");
-    pStack = createLinkedStack();
-    for (int i = 0; i < 5; i++)
-    {
-        StackNode ele;
-        ele.data = i;
-        pushLS(pStack, ele);
-    }
-    displayLS(pStack);
-    printf("\n");
-    printf("peek() : %c\n", peekLS(pStack)->data);
-    printf("\n\n");
-    printf("\n\n");
-}
-
-void    deleteLinkedStack_test()
-{
-    LinkedStack *pStack = NULL;
-
-    printf("\nThis is the Test for LinkedStack deletion\n\n");
-    pStack = createLinkedStack();
-    printf("LinkedStack : [%p]\n", pStack);
-    for (int i = 0; i < 5; i++)
-    {
-        StackNode ele;
-        ele.data = i;
-        pushLS(pStack, ele);
-    }
-    printf("Before deletion : \n");
-    displayLS(pStack);
-    printf("\n\n");
-    deleteLinkedStack(pStack);
-    printf("\nAfter Delete, You should get 0 leaks as a result of system('leaks a.out')\n");
-    printf("\n");
-}
-
-void    isLinkedStackFull_test()
-{
-    LinkedStack  *pStack = NULL;
-
-    printf("\nThis is the Test for isLinkedStackFull() on LinkedStack\n\n");
-    pStack = createLinkedStack();
-    printf("LinkedStack : [%p]\n", pStack);
-    for (int i = 0; i < 5; i++)
-    {
-        StackNode ele;
-        ele.data = i;
-        pushLS(pStack, ele);
-    }
-    displayLS(pStack);
-    printf("\n");
-    printf("It must be false because Linkedstack cannot be full.\n\n");
-    printf("isLinkedStackFull() : %d\nTRUE when it's 1, FALSE when it's 0\n", isLinkedStackFull(pStack));
-}
-
-void    isLinkedStackEmpty_test()
-{
-    LinkedStack  *pStack = NULL;
-
-    printf("\nThis is the Test for isLinkedStackEmpty() on LinkedStack\n\n");
-    pStack = createLinkedStack();
-    printf("LinkedStack : [%p]\n", pStack);
-    printf("\n");
-    printf("It must be true because this stack is already empty\n\n");
-    printf("isLinkedStackFull() : %d\nTRUE when it's 1, FALSE when it's 0\n", isLinkedStackFull(pStack));
-}
-
 int     main()
 {
-    // createLinkedStack_test();
-    // pushLS_test();
-    // popLS_test();
-    // peekLS_test();
-    // deleteLinkedStack_test();
-    // system("leaks a.out");
-    // isLinkedStackFull_test();
-    // isLinkedStackEmpty_test();
-    
+    LinkedStack  *pStack;
+    int input = 0;
+
+    pStack = createLinkedStack();
+    while (1)
+    {
+        
+        int err_flag = 1;
+
+        printf("\n============================================\n");
+        printf("Stack Status :\n");
+        displayLS(pStack);
+        printf("\n============================================\n");
+        printf("\n1 (push)   2 (pop)   3 (peek)   4 (exit)\n\nType your command number : ");
+        scanf("%d", &input);
+        if (input == 4)
+        {
+            printf("\n________Terminate the Test Program_________\n");
+            break;
+        }
+        switch (input)
+        {
+            case 1 :
+            {
+                StackNode ele;
+                char    c;
+                printf("type any charactor to push on the stack : \n");
+                scanf("%c", &c);
+                sleep(1); // Idk why, but without this code, the next scanf line has skipped.
+                scanf("%c", &c); // idk why, but without this duplicated scanf, it doesnt't work normally.
+                ele.data = c;
+                err_flag = pushLS(pStack, ele);
+                break;
+            }
+            case 2 :
+            {
+                StackNode *ele2;
+                ele2 = popLS(pStack);
+                if (ele2 == 0)
+                    err_flag = 0;
+                else
+                {
+                    sleep(1);
+                    printf("popped node : %c\n\n", ele2->data);
+                    free(ele2);
+                }
+                break;
+            }
+            case 3 :
+            {
+                StackNode *ele3;
+                ele3 = peekLS(pStack);
+                sleep(1);
+                if (ele3 == 0)
+                    err_flag = 0;
+                else
+                    printf("peeked node : %c\n\n", ele3->data);
+                break;
+            }
+            default:
+                break;
+        }
+        if (err_flag == 0)
+        {
+            printf("[error] Terminate the Test Program\n");
+            break;
+        }
+    }
+    printf("\n");
+    deleteLinkedStack(pStack);  
     return (0);
-}
+} // 왜 앞에 sleep() 함수를 붙이지 않으면 scanf()문이 작동하지 않고 넘어가나?

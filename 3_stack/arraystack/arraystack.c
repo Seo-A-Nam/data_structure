@@ -6,25 +6,25 @@ ArrayStack* createArrayStack(int maxElementCount)
 
     if (maxElementCount < 0)
     {
-        printf("[error] invalid value : maxElementCount\n");//invalid maxElementCount value
+        printf("[error] invalid value : maxElementCount\n");
         return (pStack);
     }
-    pStack = (ArrayStack*)malloc(sizeof(ArrayStack));//스택을 동적할당
+    pStack = (ArrayStack*)malloc(sizeof(ArrayStack));
     if (pStack == NULL)
     {
         printf("[error] malloc failure : pStack\n");
       	return (pStack);
-    } // malloc failure handling
-    memset(pStack, 0, sizeof(ArrayStack));//ArrayStack만큼 0으로 초기화
-  	pStack->maxElementCount = maxElementCount;//maxElementCount만 값 넣기
+    }
+    memset(pStack, 0, sizeof(ArrayStack)); // initialize ArrayStack
+  	pStack->maxElementCount = maxElementCount;
   	pStack->pElement = (ArrayStackNode*)malloc(sizeof(ArrayStackNode));
-  	if (pStack->pElement == NULL)//pElement 동적할당 실패
+  	if (pStack->pElement == NULL)
     {
       	printf("[error] malloc failure : pElement\n");
       	free(pStack);
       	return (NULL);
     }
-  	memset(pStack->pElement, 0, sizeof(ArrayStackNode) * maxElementCount);
+  	memset(pStack->pElement, 0, sizeof(ArrayStackNode) * maxElementCount); // initialize pElements
   	return (pStack);
 }
 
@@ -51,7 +51,7 @@ ArrayStackNode* popAS(ArrayStack* pStack)
 		if (pStack == NULL) 
   	{
    		printf("[error] Null parameter : pStack\n");
-      return (pNode);
+      return (FALSE);
     }
   	if (isArrayStackEmpty(pStack) == 0)
     {
@@ -59,15 +59,15 @@ ArrayStackNode* popAS(ArrayStack* pStack)
       if (pNode == NULL)
       {
         printf("[error] malloc failure : pNode\n");
-        return (pNode);
+        return (FALSE);
       }
       *pNode = pStack->pElement[pStack->currentElementCount - 1];
-      pStack->pElement[pStack->currentElementCount - 1] = 0;
+      pStack->pElement[pStack->currentElementCount - 1].data = 0;
       pStack->currentElementCount--;
     }
   	else
     {
-      printf("[error] undefined behavior : Cannot try pop() on a Empty stack\n")
+      printf("[error] Stack Underflow\n");
     }
   	return (pNode);
 }
@@ -77,6 +77,7 @@ ArrayStackNode* peekAS(ArrayStack* pStack)
 		if (pStack == NULL) 
   	{
   		printf("[error] Null parameter : pStack\n");
+      return (FALSE);
   	}
   	if (isArrayStackEmpty(pStack) == 0)
 	  {
@@ -84,7 +85,7 @@ ArrayStackNode* peekAS(ArrayStack* pStack)
   	}
   	else
   	{
-    	printf("[error] undefined behavior : Cannot try peek() on a Empty stack\n")
+    	printf("[error] undefined behavior : Cannot try peek() on a Empty stack\n");
   	}
   	return (FALSE);
 }

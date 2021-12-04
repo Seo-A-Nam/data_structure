@@ -19,19 +19,20 @@ int		pushLS(LinkedStack* pStack, StackNode element)
   	if (pStack == NULL)
     {
       	printf("[error] Null parameter : pStack\n");
-      	return (FALSE)
+      	return (FALSE);
     }
   	pNode = (StackNode*)malloc(sizeof(StackNode));
   	if (pNode == NULL)
     {
       	printf("[error] malloc failure : pNode\n");
-        return (NULL);
+        return (FALSE);
       //malloc실패
     }
   	*pNode = element;
   	pNode->pLink = pStack->pTopElement;
   	pStack->pTopElement = pNode;
   	pStack->currentElementCount++;
+	return (TRUE);
 } // maxElementCount가 없다는 점이 인상적임
 // pTopElement(헤더노드) 자체가 0번째 element (?)
 
@@ -75,7 +76,7 @@ void deleteLinkedStack(LinkedStack* pStack)
   	if (pStack == NULL)
     {
       	printf("[error] Null parameter : pStack\n");
-      	return (FALSE);//각자
+      	return ;
     }
   	int index = pStack->currentElementCount;
   	for (int i = 0; i < index; i++)
@@ -111,7 +112,8 @@ int isLinkedStackEmpty(LinkedStack* pStack)
 
 int isLinkedStackFull(LinkedStack* pStack)
 {
+	(void)pStack; // unused parameter
   	return (FALSE);
-} 
+} // LinkedStack cannot be full (nodes can be added infinitely)
 /* 무조건 False 인 이유 -> maxElementCount도 없는데다가 링크드리스트 구조이므로
  가득 찰 리가 없다. */
