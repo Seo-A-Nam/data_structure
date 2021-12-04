@@ -5,6 +5,32 @@ int		direction[4][2] = {{1, 0}, {0, -1}, {-1, 0}, {0, 1}};
 char	cardinal_point[4] = {'S', 'W', 'N', 'E'}; 
   // write the direction you stepped in, into a MapPosition struct.
 
+char  course_map[HEIGHT][WIDTH + 1] = {
+  "00000000",
+  "00000000",
+  "00000000",
+  "00000000",
+  "00000000",
+  "00000000",
+  "00000000",
+  "00000000"
+}; // a map to check the course (including direction)
+
+int     mazeArray[HEIGHT][WIDTH] = 
+{
+    {0, 0, 1, 1, 1, 1, 1, 1},
+    {1, 0, 0, 0, 0, 0, 0, 1},
+    {1, 1, 1, 0, 1, 1, 1, 1},
+    {1, 1, 1, 0, 1, 1, 1, 1},
+    {1, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 1, 1, 1, 1, 1, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0},
+    {1, 1, 1, 1, 1, 1, 1, 0}
+}; // a Map of the Maze
+
+
+int     find_flag = 0;
+
 LinkedStack*  createLinkedStack()
 {
   	LinkedStack* pStack = NULL;
@@ -100,6 +126,7 @@ void	      showPath(LinkedStack *pStack, int mazeArray[HEIGHT][WIDTH])
 {
   	MapPosition	*p; 
 
+    (void)mazeArray;
 	  printf("This is a path of the Maze\n\n");
   	p = pStack->pTopElement;
     printf("\nSTART ->\n\n");
@@ -110,7 +137,24 @@ void	      showPath(LinkedStack *pStack, int mazeArray[HEIGHT][WIDTH])
     {
       for (int j = 0; j < WIDTH; j++)
       {
-        printf("%d ", mazeArray[i][j]);
+        switch (course_map[i][j])
+        {
+          case 'S' :
+            printf("▼ ");
+            break;
+          case 'W' :
+            printf("◀ ");
+            break;
+          case 'N' :
+            printf("▲ ");
+            break;
+          case 'E' :
+            printf("▶ ");
+            break;
+          default :
+            printf(". ");
+            break;
+        }
       }
       printf("\n");
     }
@@ -121,13 +165,16 @@ void	      findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosit
 {
   if (pStack->pTopElement->dx == endPos.dx && pStack->pTopElement->dy == endPos.dy)
   {
+    find_flag = 1;
     showPath(pStack, mazeArray);
     return ;
   } // if you succeed to find a path, then print that path and return.
 	for(int i = 0; i < 4; i++)
   {
-    int px = pStack->pTopElement->dx + direction[i][1];
-    int py = pStack->pTopElement->dy + direction[i][0];
+    int x = pStack->pTopElement->dx;
+    int y = pStack->pTopElement->dy;
+    int px = x + direction[i][1];
+    int py = y + direction[i][0];
     //add direction[i][0] to py. and direction[i][1] to px.
     if (HEIGHT > py && py >= 0 && WIDTH > px && px >= 0)
     { // check if the value is in the range of the given map.
@@ -140,8 +187,10 @@ void	      findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosit
           current.direction = 0;
           pStack->pTopElement->direction = cardinal_point[i]; // these two code lines enable us to write the first direction we went from the start point.
           pushLSMapPosition(pStack, current); // write your next position on the stack, before stepping into it.
+          course_map[y][x] = cardinal_point[i]; // write the direction of path on a course map
           mazeArray[py][px] = 2; // write your next position on the map, before stepping into it.
           findPath(mazeArray, startPos, endPos, pStack); // call the fuction recursively (step into the next position)
+          course_map[y][x] = '0'; // erase the direction of path from a course map
           mazeArray[py][px] = 0; // erase that bad path from the map.
           MapPosition *delNode = NULL;
           delNode = popLSMapPosition(pStack); // erase that bad path from the stack.
@@ -162,4 +211,29 @@ void	      printMaze(int mazeArray[HEIGHT][WIDTH])
     }
     printf("\n");
   }
+}
+
+int main(void)
+{
+    LinkedStack *p = createLinkedStack();
+    MapPosition startPos = {0, };
+    MapPosition endPos = {7, 7, 0, 0};
+  
+    printf("\n==================================================================\n\n");
+    printMaze(mazeArray);
+    printf("\n==================================================================\n\n");
+    if (mazeArray[startPos.dy][startPos.dx] != 0 || mazeArray[endPos.dy][endPos.dx] != 0)
+    {
+        printf("[error] Invalid value : Start position or End position\n\n");
+        return (0);
+    } // exception handling
+    mazeArray[startPos.dy][startPos.dx] = 2; // write your first position as a path on the map, before stepping into it.
+    pushLSMapPosition(p, startPos); // since p is null rn, let's first put startPos in the stack.
+    findPath(mazeArray, startPos, endPos, p);
+    mazeArray[startPos.dy][startPos.dx] = 0;
+    if (find_flag == 0)
+        printf("Cannot find any path of the maze\n");
+    printf("\n==================================================================\n\n");
+    deleteLinkedStack(p);
+    return (0);
 }

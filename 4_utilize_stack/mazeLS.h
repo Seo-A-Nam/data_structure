@@ -49,6 +49,7 @@ void	        findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPos
  // recursive function that finds a path of the maze, using DFS algorithm
 void	        printMaze(int mazeArray[HEIGHT][WIDTH]);  // print a map of the maze
 
+
 #endif
 
 #ifndef _COMMON_STACK_DEF_
