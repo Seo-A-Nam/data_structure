@@ -23,15 +23,15 @@ int     main()
         
         int err_flag = 1;
 
-        printf("\n============================================\n");
+        printf("\n=========================================================================\n");
         printf("Stack Status :\n");
         displayLS(pStack);
-        printf("\n============================================\n");
+        printf("\n=========================================================================\n");
         printf("\n1 (push)   2 (pop)   3 (peek)   4 (exit)\n\nType your command number : ");
-        scanf("%d", &input);
+        scanf(" %d", &input);
         if (input == 4)
         {
-            printf("\n________Terminate the Test Program_________\n");
+            printf("\n_______________________Terminate the Test Program_________________________\n");
             break;
         }
         switch (input)
@@ -41,9 +41,7 @@ int     main()
                 StackNode ele;
                 char    c;
                 printf("type any charactor to push on the stack : \n");
-                scanf("%c", &c);
-                sleep(1); // Idk why, but without this code, the next scanf line has skipped.
-                scanf("%c", &c); // idk why, but without this duplicated scanf, it doesnt't work normally.
+                scanf(" %c", &c);
                 ele.data = c;
                 err_flag = pushLS(pStack, ele);
                 break;
@@ -56,7 +54,6 @@ int     main()
                     err_flag = 0;
                 else
                 {
-                    sleep(1);
                     printf("popped node : %c\n\n", ele2->data);
                     free(ele2);
                 }
@@ -66,7 +63,6 @@ int     main()
             {
                 StackNode *ele3;
                 ele3 = peekLS(pStack);
-                sleep(1);
                 if (ele3 == 0)
                     err_flag = 0;
                 else
@@ -85,4 +81,4 @@ int     main()
     printf("\n");
     deleteLinkedStack(pStack);  
     return (0);
-} // 왜 앞에 sleep() 함수를 붙이지 않으면 scanf()문이 작동하지 않고 넘어가나?
+}

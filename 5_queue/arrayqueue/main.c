@@ -1,30 +1,29 @@
-#include "arraystack.h"
+#include "arrayqueue.h"
 #include "unistd.h"
 
-static void displayAS(ArrayStack* pStack)
+static void displayAQ(ArrayQueue* pQueue)
 {
-    for (int i = 0; i < pStack->currentElementCount; i++)
+    for (int i = 0; i < pQueue->currentElementCount; i++)
     {
-        printf("index (%d) : %c\n", i, pStack->pElement[i].data);
+        printf("index (%d) : %c\n", i, pQueue->pElement[i].data);
     }
 }
 
-int     main()
+int     test()
 {
-    ArrayStack  *pStack;
+    ArrayQueue  *pQueue;
     int input = 0;
 
-    pStack = createArrayStack(5);
+    pQueue = createArrayQueue(5);
     while (1)
     {
         
         int err_flag = 1;
-
         printf("\n=========================================================================\n");
-        printf("Stack Status :\n");
-        displayAS(pStack);
+        printf("Queue Status :\n");
+        displayAQ(pQueue);
         printf("\n=========================================================================\n");
-        printf("\n1 (push)   2 (pop)   3 (peek)   4 (exit)\n\nType your command number : ");
+        printf("\n1 (Enqueue)   2 (Dequeue)   3 (peek)   4 (exit)\n\nType your command number : ");
         scanf(" %d", &input);
         if (input == 4)
         {
@@ -35,31 +34,31 @@ int     main()
         {
             case 1 :
             {
-                ArrayStackNode ele;
+                ArrayQueueNode ele;
                 char    c;
-                printf("type any charactor to push on the stack : \n");
-                scanf(" %c", &c);
+                printf("type any charactor to Enqueue on the Queue : \n");
+                scanf(" %c", &c); // scanf 앞에 ' '를 넣으면 sleep을 안넣어도 먹는다. 입력이 안먹는 건 입력 시 엔터가 들어가기 때문
                 ele.data = c;
-                err_flag = pushAS(pStack, ele);
+                err_flag = enqueueAQ(pQueue, ele);
                 break;
             }
             case 2 :
             {
-                ArrayStackNode *ele2;
-                ele2 = popAS(pStack);
+                ArrayQueueNode *ele2;
+                ele2 = dequeueAQ(pQueue);
                 if (ele2 == 0)
                     err_flag = 0;
                 else
                 {
-                    printf("popped node : %c\n\n", ele2->data);
+                    printf("dequeued node : %c\n\n", ele2->data);
                     free(ele2);
                 }
                 break;
             }
             case 3 :
             {
-                ArrayStackNode *ele3;
-                ele3 = peekAS(pStack);
+                ArrayQueueNode *ele3;
+                ele3 = peekAQ(pQueue);
                 if (ele3 == 0)
                     err_flag = 0;
                 else
@@ -76,6 +75,13 @@ int     main()
         }
     }
     printf("\n");
-    deleteArrayStack(pStack);  
+    deleteArrayQueue(pQueue);  
     return (0);
-} // 왜 앞에 sleep() 함수를 붙이지 않으면 scanf()문이 작동하지 않고 넘어가나?
+}
+
+int     main()
+{
+    test();
+    system("leaks a.out");
+    return (0);
+}
