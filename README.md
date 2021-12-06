@@ -1,2 +1,2 @@
 # data_structure
-42seoul group study
+## 42seoul group study

@@ -1,62 +1,63 @@
-#include "arrayqueue.h"
+#include "circularqueue.h"
+// 선형큐는 메모리 낭비가 심해서 원형큐를 쓴다.
+// 배열큐 그대로 가져다가, 인큐, 디큐만 수정 
 
 //배열큐를 생성
-ArrayQueue* createArrayQueue(int maxElementCount)
+CircularQueue* createCircularQueue(int maxElementCount)
 {
-    ArrayQueue *AQ;
+    CircularQueue *CQ;
     
-    if (!(AQ = (ArrayQueue *)malloc(sizeof(ArrayQueue))))
+    if (!(CQ = (CircularQueue *)calloc(1, sizeof(CircularQueue))))
     {
-        printf("[error] malloc failure : AQ\n");
+        printf("[error] malloc failure : CQ\n");
         return (FALSE);
     }
-    memset(AQ, 0, sizeof(ArrayQueue)); // 메모리 초기화
-    AQ->pElement = (ArrayQueueNode *)calloc(maxElementCount, sizeof(ArrayQueueNode));
-    if (!AQ->pElement)
+    CQ->pElement = (CircularQueueNode *)calloc(maxElementCount, sizeof(CircularQueueNode));
+    if (!CQ->pElement)
     {
-        printf("[error] malloc failure : AQ\n");
-        free(AQ);
+        printf("[error] malloc failure : CQ\n");
+        free(CQ);
         return (FALSE);
     }
-    AQ->maxElementCount = maxElementCount;
-    return (AQ);
+    CQ->maxElementCount = maxElementCount;
+    return (CQ);
 }
 
 //배열 큐를 인큐(원소 추가) - 원소 추가 가능 여부 판단
-int enqueueAQ(ArrayQueue* pQueue, ArrayQueueNode element)
+int enqueueCQ(CircularQueue* pQueue, CircularQueueNode element)
 {
     if (pQueue == NULL)
     {
         printf("[error] Null parameter : pQueue\n");
         return (FALSE);
     }
-    if (isArrayQueueFull(pQueue))
+    if (isCircularQueueFull(pQueue))
     {
         printf("[error] Queue Overflow\n");
         return (FALSE);
     }
-    pQueue->pElement[pQueue->rear].data = element.data;
     pQueue->currentElementCount++;
-    pQueue->rear++;
+    pQueue->pElement[pQueue->rear].data = element.data;
+    pQueue->rear = (pQueue->rear + 1) % (pQueue->maxElementCount); // 기존 배열 큐에서의 rear++ 코드 지우고 이걸 넣음
     return (TRUE);
 }
 
 //배열큐를 디큐(원소 삭제)
-ArrayQueueNode *dequeueAQ(ArrayQueue* pQueue)
+CircularQueueNode *dequeueCQ(CircularQueue* pQueue)
 {
-    ArrayQueueNode  *pNode;
+    CircularQueueNode  *pNode;
 
     if (pQueue == NULL)
     {
         printf("[error] Null parameter : pQueue\n");
         return (FALSE);
     }
-    if (isArrayQueueEmpty(pQueue))
+    if (isCircularQueueEmpty(pQueue))
     {
         printf("[error] Queue Underflow\n");
         return (FALSE);
     }
-    pNode = (ArrayQueueNode *)malloc(sizeof(ArrayQueueNode));
+    pNode = (CircularQueueNode *)malloc(sizeof(CircularQueueNode));
     if (pNode == NULL)
     {
         printf("[error] malloc failure : pNode\n");
@@ -64,31 +65,29 @@ ArrayQueueNode *dequeueAQ(ArrayQueue* pQueue)
     }
     *pNode = pQueue->pElement[pQueue->front];
     pQueue->pElement[pQueue->front].data = 0;
+    pQueue->front = (pQueue->front + 1) % (pQueue->maxElementCount); // 기존 배열 큐에서의 rear++ 코드 지우고 이걸 넣음
     pQueue->currentElementCount--;
-    memmove(&pQueue->pElement[pQueue->front], &pQueue->pElement[pQueue->front + 1], 
-        sizeof(*pQueue->pElement) * (pQueue->currentElementCount));
-    pQueue->rear--;
     return (pNode);
 }
 
 //배열큐를 피크(원소 확인)
-ArrayQueueNode *peekAQ(ArrayQueue* pQueue)
+CircularQueueNode *peekCQ(CircularQueue* pQueue)
 {
     if (pQueue == NULL)
     {
         printf("[error] Null parameter : pQueue\n");
         return (FALSE);
     }
-    if (isArrayQueueEmpty(pQueue))
+    if (isCircularQueueEmpty(pQueue))
     {
-        printf("[error] undefined behavior : Cannot try peek() on a Empty Queue.\n");
+        printf("[error] undefined behavior : Cannot try peek() on a Empty Queue\n");
         return (FALSE);
     }
     return (&(pQueue->pElement[pQueue->front]));
 }
 
 //배열큐 삭제
-void deleteArrayQueue(ArrayQueue* pQueue)
+void deleteCircularQueue(CircularQueue* pQueue)
 {
     if (pQueue == NULL)
     {
@@ -101,7 +100,7 @@ void deleteArrayQueue(ArrayQueue* pQueue)
 }
 
 //배열큐가 가득 차있는지 확인
-int isArrayQueueFull(ArrayQueue* pQueue)
+int isCircularQueueFull(CircularQueue* pQueue)
 {
     if (pQueue == NULL)
     {
@@ -114,7 +113,7 @@ int isArrayQueueFull(ArrayQueue* pQueue)
 } // if (pQueue->rear == pQueue->maxElementCount - 1) return (TRUE);로 하려했더니 5개째 스택오버플로우 터져야하는게 4개째에서 터졌음
 
 //배열큐가 비어있는지 확인
-int isArrayQueueEmpty(ArrayQueue* pQueue)
+int isCircularQueueEmpty(CircularQueue* pQueue)
 {
     if (pQueue == NULL)
     {

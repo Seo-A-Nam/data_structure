@@ -10,9 +10,6 @@ LinkedDeque* createLinkedDeque()
         return (FALSE);
     }
     memset(LD, 0, sizeof(LinkedDeque)); // 메모리 초기화
-    LD->currentElementCount = 0;
-    LD->pRearNode = 0;
-    LD->pFrontNode = 0;
     return (LD);
 }
 
@@ -48,7 +45,7 @@ int insertFrontLD(LinkedDeque* pDeque, DequeNode element)
         printf("[error] malloc failure : LD\n");
         return (FALSE);
     }
-    *newNode = element;
+    newNode->data = element.data;
     newNode->pRLink = NULL;
     newNode->pLLink = NULL;
     if (isLinkedDequeEmpty(pDeque))
@@ -76,10 +73,9 @@ int insertRearLD(LinkedDeque* pDeque, DequeNode element)
         printf("[error] malloc failure : LD\n");
         return (FALSE);
     }
-    *newNode = element;
+    newNode->data = element.data;
     newNode->pRLink = NULL;
     newNode->pLLink = NULL;
-    
     if (isLinkedDequeEmpty(pDeque))
     {
         pDeque->pFrontNode = newNode;
@@ -97,54 +93,46 @@ int insertRearLD(LinkedDeque* pDeque, DequeNode element)
 
 DequeNode* deleteFrontLD(LinkedDeque* pDeque)
 {
-    DequeNode *pNode = NULL;
-    
+    DequeNode *delNode = NULL;
+
     if (pDeque == NULL)
     {
         printf("[error] Null parameter : pDeque\n");
         return (FALSE);
     }
-    if (!(isLinkedDequeEmpty(pDeque)))
-    {
-        pNode = pDeque->pFrontNode;
-        pDeque->pFrontNode = pDeque->pFrontNode->pRLink;
-        pNode->pRLink = NULL;
-        pDeque->currentElementCount--;
-        if (isLinkedDequeEmpty(pDeque))
-        {
-            pDeque->pRearNode = NULL;
-        }
-        else if (!(isLinkedDequeEmpty(pDeque)))
-        {
-            pDeque->pFrontNode->pLLink = NULL;
-        }
+    if (isLinkedDequeEmpty(pDeque))
+    { // 비어있는 덱에서는 노드 삭제가 안되므로 에러메시지 (덱 언더플로우) 출력
+        printf("[error] Deque Underflow\n");
+        return (FALSE);
     }
-    return (pNode);
+    delNode = pDeque->pFrontNode;
+    pDeque->pFrontNode = pDeque->pFrontNode->pRLink;
+    delNode->pRLink = NULL;
+    delNode->pLLink = NULL; // 어차피 반환할 노드니까 다음노드링크를 전부 0으로 해서 연결을 끊는다.
+    pDeque->currentElementCount--;
+    return (delNode);
 }
 
 DequeNode* deleteRearLD(LinkedDeque* pDeque)
 {
-    DequeNode   *pNode = NULL;
+    DequeNode   *delNode = NULL;
 
     if (pDeque == NULL)
     {
         printf("[error] Null parameter : pDeque\n");
         return (FALSE);
     }
-    if (!(isLinkedDequeEmpty(pDeque)))
-    {
-        pNode = pDeque->pRearNode;
-        pDeque->pRearNode = pDeque->pRearNode->pLLink;
-        pNode->pRLink = NULL;
-        pDeque->currentElementCount--;
-    }
     if (isLinkedDequeEmpty(pDeque))
-    {
-        pDeque->pFrontNode = NULL;
+    { // 비어있는 덱에서는 노드 삭제가 안되므로 에러메시지 (덱 언더플로우) 출력
+        printf("[error] Deque Underflow\n");
+        return (FALSE);
     }
-    else
-        pDeque->pRearNode->pRLink = NULL;
-    return (pNode);
+    delNode = pDeque->pRearNode;
+    pDeque->pRearNode = pDeque->pRearNode->pLLink;
+    delNode->pLLink = NULL;
+    delNode->pRLink = NULL; // 어차피 반환할 노드니까 다음노드링크를 전부 0으로 해서 연결을 끊는다.
+    pDeque->currentElementCount--;
+    return (delNode);
 }
 
 DequeNode* peekFrontLD(LinkedDeque* pDeque)
@@ -152,6 +140,11 @@ DequeNode* peekFrontLD(LinkedDeque* pDeque)
     if (pDeque == NULL)
     {
         printf("[error] Null parameter : pDeque\n");
+        return (FALSE);
+    }
+    if (isLinkedDequeEmpty(pDeque))
+    {
+        printf("[error] undefined behavior : Cannot try peek() on a Empty Deque.\n");
         return (FALSE);
     }
     return (pDeque->pFrontNode);
@@ -162,6 +155,11 @@ DequeNode* peekRearLD(LinkedDeque* pDeque)
     if (pDeque == NULL)
     {
         printf("[error] Null parameter : pDeque\n");
+        return (FALSE);
+    }
+    if (isLinkedDequeEmpty(pDeque))
+    {
+        printf("[error] undefined behavior : Cannot try peek() on a Empty Deque.\n");
         return (FALSE);
     }
     return (pDeque->pRearNode);

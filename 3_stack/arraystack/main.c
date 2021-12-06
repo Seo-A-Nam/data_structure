@@ -1,5 +1,4 @@
 #include "arraystack.h"
-#include "unistd.h"
 
 static void displayAS(ArrayStack* pStack)
 {

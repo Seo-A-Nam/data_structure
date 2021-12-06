@@ -1,5 +1,4 @@
 #include "linkedstack.h"
-#include "unistd.h"
 
 static void displayLS(LinkedStack* pStack)
 {
