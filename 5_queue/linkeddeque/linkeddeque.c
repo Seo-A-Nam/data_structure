@@ -109,6 +109,10 @@ DequeNode* deleteFrontLD(LinkedDeque* pDeque)
     pDeque->pFrontNode = pDeque->pFrontNode->pRLink;
     delNode->pRLink = NULL;
     delNode->pLLink = NULL; // 어차피 반환할 노드니까 다음노드링크를 전부 0으로 해서 연결을 끊는다.
+    if (pDeque->currentElementCount == 1) // 노드가 1개인 덱
+        pDeque->pRearNode = NULL;
+    else // 노드가 2개 이상인 덱 (일반적인 경우)
+        pDeque->pFrontNode->pLLink = NULL;  
     pDeque->currentElementCount--;
     return (delNode);
 }
@@ -131,6 +135,10 @@ DequeNode* deleteRearLD(LinkedDeque* pDeque)
     pDeque->pRearNode = pDeque->pRearNode->pLLink;
     delNode->pLLink = NULL;
     delNode->pRLink = NULL; // 어차피 반환할 노드니까 다음노드링크를 전부 0으로 해서 연결을 끊는다.
+    if (pDeque->currentElementCount == 1) // 노드가 1개인 덱
+        pDeque->pFrontNode = NULL;
+    else // 노드가 2개 이상인 덱 (일반적인 경우)
+        pDeque->pRearNode->pRLink = NULL;
     pDeque->currentElementCount--;
     return (delNode);
 }
