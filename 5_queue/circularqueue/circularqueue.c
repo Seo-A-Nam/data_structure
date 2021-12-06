@@ -1,6 +1,6 @@
 #include "circularqueue.h"
 // 선형큐는 메모리 낭비가 심해서 원형큐를 쓴다.
-// 배열큐 그대로 가져다가, 인큐, 디큐만 수정 
+// 배열큐 그대로 가져다가, 인큐, 디큐, 큐풀만 수정 
 
 //배열큐를 생성
 CircularQueue* createCircularQueue(int maxElementCount)

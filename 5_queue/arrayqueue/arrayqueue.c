@@ -4,13 +4,12 @@
 ArrayQueue* createArrayQueue(int maxElementCount)
 {
     ArrayQueue *AQ;
-    
-    if (!(AQ = (ArrayQueue *)malloc(sizeof(ArrayQueue))))
+
+    if (!(AQ = (ArrayQueue *)calloc(1, sizeof(ArrayQueue)))) // 메모리 할당과 함께 메모리 초기화
     {
         printf("[error] malloc failure : AQ\n");
         return (FALSE);
     }
-    memset(AQ, 0, sizeof(ArrayQueue)); // 메모리 초기화
     AQ->pElement = (ArrayQueueNode *)calloc(maxElementCount, sizeof(ArrayQueueNode));
     if (!AQ->pElement)
     {
@@ -65,9 +64,7 @@ ArrayQueueNode *dequeueAQ(ArrayQueue* pQueue)
     *pNode = pQueue->pElement[pQueue->front];
     pQueue->pElement[pQueue->front].data = 0;
     pQueue->currentElementCount--;
-    memmove(&pQueue->pElement[pQueue->front], &pQueue->pElement[pQueue->front + 1], 
-        sizeof(*pQueue->pElement) * (pQueue->currentElementCount));
-    pQueue->rear--;
+    pQueue->front++;
     return (pNode);
 }
 
@@ -108,7 +105,7 @@ int isArrayQueueFull(ArrayQueue* pQueue)
         printf("[error] Null parameter : pQueue\n");
         return (FALSE);
     }
-    if (pQueue->currentElementCount == pQueue->maxElementCount)
+    if (pQueue->rear == pQueue->maxElementCount)
         return (TRUE);
     return (FALSE);
 } // if (pQueue->rear == pQueue->maxElementCount - 1) return (TRUE);로 하려했더니 5개째 스택오버플로우 터져야하는게 4개째에서 터졌음

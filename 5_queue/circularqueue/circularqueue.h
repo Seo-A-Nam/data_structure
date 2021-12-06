@@ -24,13 +24,13 @@ typedef struct CircularQueueType
 	CircularQueueNode *pElement;
 } CircularQueue;
 
-CircularQueue* 	createCircularQueue(int maxElementCount);
-int 			enqueueCQ(CircularQueue* pQueue, CircularQueueNode element);
+CircularQueue* 		createCircularQueue(int maxElementCount);
+int 				enqueueCQ(CircularQueue* pQueue, CircularQueueNode element);
 CircularQueueNode 	*dequeueCQ(CircularQueue* pQueue);
 CircularQueueNode 	*peekCQ(CircularQueue* pQueue);
-void 			deleteCircularQueue(CircularQueue* pQueue);
-int 			isCircularQueueFull(CircularQueue* pQueue);
-int 			isCircularQueueEmpty(CircularQueue* pQueue);
+void 				deleteCircularQueue(CircularQueue* pQueue);
+int 				isCircularQueueFull(CircularQueue* pQueue);
+int 				isCircularQueueEmpty(CircularQueue* pQueue);
 
 #endif
 

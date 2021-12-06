@@ -2,8 +2,8 @@
 
 static void displayAQ(ArrayQueue* pQueue)
 {
-    //printf("front : %d   rear : %d\n", pQueue->front, pQueue->rear);
-    for (int i = 0; i < pQueue->currentElementCount; i++)
+    printf("front : %d   rear : %d\n", pQueue->front, pQueue->rear);
+    for (int i = 0; i < pQueue->maxElementCount; i++)
     {
         printf("index (%d) : %c\n", i, pQueue->pElement[i].data);
     }
