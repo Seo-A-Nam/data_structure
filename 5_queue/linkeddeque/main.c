@@ -104,8 +104,12 @@ int     test()
                     printf("peeked node from rear : %c\n\n", ele6->data);
                 break;
             }
-            default:
+            default :
+            {
+                printf("[error] Wrong command\n");
+                err_flag = 0;
                 break;
+            }
         }
         if (err_flag == 0)
         {

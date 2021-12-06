@@ -71,8 +71,12 @@ int     test()
                     printf("peeked node : %c\n\n", ele3->data);
                 break;
             }
-            default:
+            default :
+            {
+                printf("[error] Wrong command\n");
+                err_flag = 0;
                 break;
+            }
         }
         if (err_flag == 0)
         {
