@@ -2,7 +2,7 @@
 // 선형큐는 메모리 낭비가 심해서 원형큐를 쓴다.
 // 배열큐 그대로 가져다가, 인큐, 디큐, 큐풀만 수정 
 
-//배열큐를 생성
+// 원형 큐를 생성
 CircularQueue* createCircularQueue(int maxElementCount)
 {
     CircularQueue *CQ;
@@ -23,7 +23,7 @@ CircularQueue* createCircularQueue(int maxElementCount)
     return (CQ);
 }
 
-//배열 큐를 인큐(원소 추가) - 원소 추가 가능 여부 판단
+// 원형 큐를 인큐(원소 추가) - 원소 추가 가능 여부 판단
 int enqueueCQ(CircularQueue* pQueue, CircularQueueNode element)
 {
     if (pQueue == NULL)
@@ -42,7 +42,7 @@ int enqueueCQ(CircularQueue* pQueue, CircularQueueNode element)
     return (TRUE);
 }
 
-//배열큐를 디큐(원소 삭제)
+// 원형 큐를 디큐(원소 삭제)
 CircularQueueNode *dequeueCQ(CircularQueue* pQueue)
 {
     CircularQueueNode  *pNode;
@@ -65,12 +65,12 @@ CircularQueueNode *dequeueCQ(CircularQueue* pQueue)
     }
     *pNode = pQueue->pElement[pQueue->front];
     pQueue->pElement[pQueue->front].data = 0;
-    pQueue->front = (pQueue->front + 1) % (pQueue->maxElementCount); // 기존 배열 큐에서의 rear++ 코드 지우고 이걸 넣음
+    pQueue->front = (pQueue->front + 1) % (pQueue->maxElementCount); // 기존 배열 큐에서의 front++ 코드 지우고 이걸 넣음
     pQueue->currentElementCount--;
     return (pNode);
 }
 
-//배열큐를 피크(원소 확인)
+// 원형 큐를 피크(원소 확인)
 CircularQueueNode *peekCQ(CircularQueue* pQueue)
 {
     if (pQueue == NULL)
@@ -86,7 +86,7 @@ CircularQueueNode *peekCQ(CircularQueue* pQueue)
     return (&(pQueue->pElement[pQueue->front]));
 }
 
-//배열큐 삭제
+// 원형 큐 삭제
 void deleteCircularQueue(CircularQueue* pQueue)
 {
     if (pQueue == NULL)
@@ -99,7 +99,7 @@ void deleteCircularQueue(CircularQueue* pQueue)
     free(pQueue);
 }
 
-//배열큐가 가득 차있는지 확인
+// 원형 큐가 가득 차있는지 확인
 int isCircularQueueFull(CircularQueue* pQueue)
 {
     if (pQueue == NULL)
@@ -110,9 +110,8 @@ int isCircularQueueFull(CircularQueue* pQueue)
     if (pQueue->currentElementCount == pQueue->maxElementCount)
         return (TRUE);
     return (FALSE);
-} // if (pQueue->rear == pQueue->maxElementCount - 1) return (TRUE);로 하려했더니 5개째 스택오버플로우 터져야하는게 4개째에서 터졌음
-
-//배열큐가 비어있는지 확인
+}
+// 원형 큐가 비어있는지 확인
 int isCircularQueueEmpty(CircularQueue* pQueue)
 {
     if (pQueue == NULL)
