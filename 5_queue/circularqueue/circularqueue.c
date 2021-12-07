@@ -7,6 +7,11 @@ CircularQueue* createCircularQueue(int maxElementCount)
 {
     CircularQueue *CQ;
     
+    if (maxElementCount < 0)
+    {
+        printf("[error] invalid value : maxElementCount\n");
+        return (FALSE);
+    }
     if (!(CQ = (CircularQueue *)calloc(1, sizeof(CircularQueue))))
     {
         printf("[error] malloc failure : CQ\n");

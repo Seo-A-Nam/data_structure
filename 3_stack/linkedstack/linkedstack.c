@@ -7,7 +7,7 @@ LinkedStack* createLinkedStack()
     if (pStack == NULL)
     {
         printf("[error] malloc failure : pStack\n");
-        return (NULL);
+        return (FALSE);
     }
     memset(pStack, 0, sizeof(LinkedStack));
     return (pStack);
@@ -42,12 +42,12 @@ StackNode* popLS(LinkedStack* pStack)
 		if (pStack == NULL)
     {
       	printf("[error] Null parameter : pStack\n");
-      	return (FALSE);//각자
+      	return (FALSE);
     }
   	if (isLinkedStackEmpty(pStack) == TRUE)
     {
       	printf("[error] Stack Underflow\n");
-      	return (delNode);//각자
+      	return (FALSE);
     }
   	delNode = pStack->pTopElement;
   	pStack->pTopElement = delNode->pLink;
@@ -61,12 +61,12 @@ StackNode* peekLS(LinkedStack* pStack)
   	if (pStack == NULL)
     {
       	printf("[error] Null parameter : pStack\n");
-      	return (FALSE);//각자
+      	return (FALSE);
     }
   	if (isLinkedStackEmpty(pStack) == TRUE)
     {
       	printf("[error] Stack is empty\n");
-      	return (FALSE);//각자
+      	return (FALSE);
     }
   	return (pStack->pTopElement);
 }

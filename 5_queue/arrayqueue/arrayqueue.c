@@ -5,6 +5,11 @@ ArrayQueue* createArrayQueue(int maxElementCount)
 {
     ArrayQueue *AQ;
 
+    if (maxElementCount < 0)
+    {
+        printf("[error] invalid value : maxElementCount\n");
+        return (FALSE);
+    }
     if (!(AQ = (ArrayQueue *)calloc(1, sizeof(ArrayQueue)))) // 메모리 할당과 함께 메모리 초기화
     {
         printf("[error] malloc failure : AQ\n");
