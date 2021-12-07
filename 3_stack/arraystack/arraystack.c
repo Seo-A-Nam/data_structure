@@ -109,7 +109,8 @@ int isArrayStackFull(ArrayStack* pStack)
 {
     if (pStack == NULL)
     {
-        return (FALSE);
+      printf("[error] Null parameter : pStack\n");
+      return (FALSE);
     }
   	if (pStack->currentElementCount == pStack->maxElementCount)
     {
@@ -122,7 +123,8 @@ int isArrayStackEmpty(ArrayStack* pStack)
 {
   	if (pStack == NULL)
     {
-        return (FALSE);
+      printf("[error] Null parameter : pStack\n");
+      return (FALSE);
     }
   	if (pStack->currentElementCount == 0)
     {
