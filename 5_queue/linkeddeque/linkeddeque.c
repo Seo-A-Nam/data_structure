@@ -187,6 +187,7 @@ void deleteLinkedDeque(LinkedDeque* pDeque)
     {
         DequeNode *node;
         node = deleteFrontLD(pDeque);
+        //node->data = 0; // makes it more safer? 더 안전하다? -- 잘 모르겠으니까 빼자
         free(node);
         node = 0;
     }

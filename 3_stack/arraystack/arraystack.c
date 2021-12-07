@@ -7,13 +7,13 @@ ArrayStack* createArrayStack(int maxElementCount)
     if (maxElementCount < 0)
     {
         printf("[error] invalid value : maxElementCount\n");
-        return (pStack);
+        return (FALSE);
     }
     pStack = (ArrayStack*)malloc(sizeof(ArrayStack));
     if (pStack == NULL)
     {
         printf("[error] malloc failure : pStack\n");
-      	return (pStack);
+      	return (FALSE);
     }
     memset(pStack, 0, sizeof(ArrayStack)); // initialize ArrayStack
   	pStack->maxElementCount = maxElementCount;
@@ -22,7 +22,7 @@ ArrayStack* createArrayStack(int maxElementCount)
     {
       	printf("[error] malloc failure : pElement\n");
       	free(pStack);
-      	return (NULL);
+      	return (FALSE);
     }
   	memset(pStack->pElement, 0, sizeof(ArrayStackNode) * maxElementCount); // initialize pElements
   	return (pStack);
@@ -36,7 +36,7 @@ int pushAS(ArrayStack* pStack, ArrayStackNode element)
     }
   	if (isArrayStackFull(pStack) == 0)
     {
-      	pStack->pElement[pStack->currentElementCount] = element;
+      	pStack->pElement[pStack->currentElementCount].data = element.data;
       	pStack->currentElementCount++;
       	return (TRUE);
     }
@@ -107,27 +107,22 @@ void deleteArrayStack(ArrayStack* pStack)
 
 int isArrayStackFull(ArrayStack* pStack)
 {
-  	int ret = FALSE;
-  
-  	if (pStack != NULL)
+    if (pStack == NULL)
     {
-      if (pStack->currentElementCount == pStack->maxElementCount)
-      {
-        ret = TRUE;
-      }
+        return (FALSE);
     }
-  	else
+  	if (pStack->currentElementCount == pStack->maxElementCount)
     {
-      return (ERROR);
+      return (TRUE);
     }
-  	return (ret);
+  	return (FALSE);
 }
 
 int isArrayStackEmpty(ArrayStack* pStack)
 {
   	if (pStack == NULL)
     {
-        return (ERROR);
+        return (FALSE);
     }
   	if (pStack->currentElementCount == 0)
     {
