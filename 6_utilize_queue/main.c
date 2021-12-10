@@ -11,7 +11,7 @@ int		test()
 	QueueNode *pServiceNode = NULL;
 	int currentTime = 0;
 	int n = 0; // 고객 수
-    int ServiceUserCount = 0;
+	int ServiceUserCount = 0;
 	int pTotalWaitTime = 0;
 
 	printf("---------------------------------------------------------------\n");
@@ -30,10 +30,8 @@ int		test()
 		printf("\n");
 		insertCustomer(arrivalTime, serviceTime, pArrivalQueue);
 	}
-	while (currentTime < 10)
-	{	
-		if (pArrivalQueue->currentElementCount == 0)
-			break;
+	while (currentTime < 15)
+	{
 		printf("===============================================================\n");
 		printf("Status Check :\n");
 		printWaitQueueStatus(currentTime, pArrivalQueue); //기다리는 고객 출력
@@ -42,24 +40,19 @@ int		test()
 		printf("Process :\n");
 		if (!isLinkedQueueEmpty(pArrivalQueue))
 			processArrival(currentTime, pArrivalQueue, pWaitQueue);
+		if (pServiceNode)
+		{
+			pServiceNode = processServiceNodeEnd(currentTime, pServiceNode, &ServiceUserCount, &pTotalWaitTime);
+			if (pServiceNode)
+				printSimCustomer(currentTime, pServiceNode->data);
+			//	printf("check3\n");
+		}
 		if (!pServiceNode)
 		{
 			//printf("check0\n");
 		//printSimCustomer(currentTime, pServiceNode->data);
 			pServiceNode = processServiceNodeStart(currentTime, pWaitQueue);
 			//printf("check1\n");
-		}
-		//else if (pServiceNode)
-		//{
-		//	printf("check2\n");
-		
-		if (pServiceNode->data.endTime)
-		{
-			pServiceNode = processServiceNodeEnd(currentTime, pServiceNode, &ServiceUserCount, &pTotalWaitTime);
-			printSimCustomer(currentTime, pServiceNode->data);
-			//	printf("check3\n");
-			free(pServiceNode);
-			pServiceNode = 0;
 		}
 		//}
 		currentTime++;	

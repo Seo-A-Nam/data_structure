@@ -73,9 +73,9 @@ void processArrival(int currentTime, LinkedQueue *pArrivalQueue, LinkedQueue *pW
 		return ;
 	}
 	if (isLinkedQueueEmpty(pArrivalQueue))
-		printf("도착한 손님이 없음\n");
+		return ;
 	Node = peekFrontLD(pArrivalQueue); //도착한 손님들중 젤 위를 peek
-	if (Node->data.arrivalTime == currentTime)//손님이 도착한 시간에
+	if (Node->data.arrivalTime <= currentTime)//손님이 도착한 시간에
 	{
 		Node = deleteFrontLD(pArrivalQueue); //도착한손님큐에서 빼고 (dequeue)
         QueueNode ele;
@@ -141,8 +141,9 @@ QueueNode* processServiceNodeEnd(int currentTime, QueueNode *pServiceNode,
 	//	printf("[error] NULL parameter : pServiceNode\n");
 	//	return (FALSE);
 	//}
-	if (pServiceNode->data.endTime == currentTime)
+	if (pServiceNode->data.endTime <= currentTime)
 	{
+		
 		//printf("data->startTime : %d\tdata.arrivalTime : %d\n", pServiceNode->data.startTime, pServiceNode->data.arrivalTime);
 		(*pTotalWaitTime) += (pServiceNode->data.startTime - pServiceNode->data.arrivalTime);
 		(*pServiceUserCount)++;
@@ -150,6 +151,8 @@ QueueNode* processServiceNodeEnd(int currentTime, QueueNode *pServiceNode,
 		printf("pTotalWaitTime : %d\tpServiceUserCount : %d\n", *pTotalWaitTime, *pServiceUserCount);
 		//pServiceNode = (QueueNode *)(pServiceNode->pRLink);
 		pServiceNode->data.status = end;
+		free(pServiceNode);
+		pServiceNode = 0;
 	}//else처리안함
 	return (pServiceNode);//서비스 끝난 상태의 서비스 노드 반환
 }
