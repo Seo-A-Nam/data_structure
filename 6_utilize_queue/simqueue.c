@@ -49,7 +49,6 @@ void insertCustomer(int arrivalTime, int processTime, LinkedQueue *pArrivalQueue
 	ele.data.serviceTime = processTime;
 	ele.data.status = arrival;
 	insertRearLD(pArrivalQueue, ele);
-	return ;
 }
 
 // 고객 도착 처리.
@@ -141,7 +140,7 @@ QueueNode* processServiceNodeEnd(int currentTime, QueueNode *pServiceNode,
 	//	printf("[error] NULL parameter : pServiceNode\n");
 	//	return (FALSE);
 	//}
-	if (pServiceNode->data.endTime <= currentTime)
+	if (pServiceNode->data.endTime == currentTime)
 	{
 		
 		//printf("data->startTime : %d\tdata.arrivalTime : %d\n", pServiceNode->data.startTime, pServiceNode->data.arrivalTime);
@@ -151,8 +150,9 @@ QueueNode* processServiceNodeEnd(int currentTime, QueueNode *pServiceNode,
 		printf("pTotalWaitTime : %d\tpServiceUserCount : %d\n", *pTotalWaitTime, *pServiceUserCount);
 		//pServiceNode = (QueueNode *)(pServiceNode->pRLink);
 		pServiceNode->data.status = end;
-		free(pServiceNode);
-		pServiceNode = 0;
+		//free(pServiceNode);
+		//pServiceNode = 0;
+		return (0);
 	}//else처리안함
 	return (pServiceNode);//서비스 끝난 상태의 서비스 노드 반환
 }
