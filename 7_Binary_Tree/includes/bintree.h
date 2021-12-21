@@ -42,26 +42,30 @@ void deleteBinTreeNode(BinTreeNode* pNode);
 
 ========================================================================
 */
-
-typedef struct QueueNodeType
+typedef struct DequeNodeType
 {
-	BinTreeNode             *node;
-	struct QueueNodeType*   pLink;
-} QueueNode;
+	BinTreeNode* data;//이진 노드
+	struct DequeNodeType* pRLink;
+	struct DequeNodeType* pLLink;
+} DequeNode;
 
-typedef struct LinkedQueueType
+typedef struct LinkedDequeType
 {
-	int                     currentElementCount;
-	QueueNode*              tail;
-} LinkedQueue;
+	int currentElementCount;
+	DequeNode* pFrontNode;
+	DequeNode* pRearNode;
+} LinkedDeque;
 
-LinkedQueue *createLinkedQueue(void);
-int enqueueLinkedQueue(LinkedQueue *pQueue, QueueNode element);
-QueueNode *dequeLinkedQueue(LinkedQueue *pQueue);
-QueueNode *peekLinkedQueue(LinkedQueue *pQueue);
-void deleteLinkedQueue(LinkedQueue *pQueue);
-int isLinkedQueueEmpty(LinkedQueue *Queue);
-void displayLinkedQueue(LinkedQueue *pQueue);
+LinkedDeque* createLinkedDeque();
+int insertFrontLD(LinkedDeque* pDeque, DequeNode element);
+int insertRearLD(LinkedDeque* pDeque, DequeNode element);
+DequeNode* deleteFrontLD(LinkedDeque* pDeque);
+DequeNode* deleteRearLD(LinkedDeque* pDeque);
+DequeNode* peekFrontLD(LinkedDeque* pDeque);
+DequeNode* peekRearLD(LinkedDeque* pDeque);
+void deleteLinkedDeque(LinkedDeque* pDeque);
+int isLinkedDequeFull(LinkedDeque* pDeque);
+int isLinkedDequeEmpty(LinkedDeque* pDeque);
 
 /*
 ========================================================================
@@ -77,7 +81,7 @@ void inorderTraversalBinTree(BinTree *binTree);
 void inorderTraversalBinTreeNode(BinTreeNode *binTreeNode);
 void postorderTraversalBinTree(BinTree *binTree);
 void postorderTraversalBinTreeNode(BinTreeNode *binTreeNode);
-//void levelOrderTraversalBinTree(BinTree *binTree);
+void levelOrderTraversalBinTree(BinTree *binTree);
 
 #endif
 

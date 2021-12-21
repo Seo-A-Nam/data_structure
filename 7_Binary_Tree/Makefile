@@ -1,27 +1,27 @@
-SRCS	=	bintree.c \
-			main.c \
+SRCS =	srcs/bintree.c srcs/bintree_traverse.c srcs/main.c srcs/linkeddeque.c
 
-OBJS	=	$(SRCS:.c=.o)
+INCS =	includes/
 
-CC		=	gcc
+NAME =	a.out
 
-# CFLAGS	=	-Wall -Werror -Wextra
+CC = gcc
 
-NAME	=	a.out
-
-all		:	$(NAME)
-
-$(NAME)	:	$(OBJS)
-			$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
-
-clean	:
-			rm -f $(OBJS)
-
-fclean	:	clean
-			rm -f $(NAME)
-
-re		:	fclean all
-
-.PHONY	:	all clean fclean re
+CFLAGS = -Wall -Wextra -Werror -I$(INCS)
 
 
+OBJS = $(SRCS:.c=.o)
+
+all : $(NAME)
+
+$(NAME) : $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+
+clean : 
+	rm -f $(OBJS)
+
+fclean : clean
+	rm -f $(OBJS) $(NAME)
+
+re : fclean all
+
+.PHONY: all clean fclean re
