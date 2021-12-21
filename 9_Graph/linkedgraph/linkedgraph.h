@@ -14,7 +14,7 @@ typedef struct LinkedGraphType
 	int currentEdgeCount;	// 현재 edge(노드 간 간선)의 개수
 	int graphType;			// 그래프의 타입 (무방향, 유방향) : 1-Undirected, 2-Directed
 	LinkedList** ppAdjEdge;	// 노드 간의 간선과 그 weight를 표시할 수 있는 인접 리스트
-	int *pVertex;			// vertex(노드)의 상태 (visited, not-used, used)
+	int *pVertex;			// vertex(노드)들의 상태를 표시하는 1차원 배열 (visited, not-used, used)
 } LinkedGraph;
 
 /*
@@ -24,6 +24,8 @@ typedef struct LinkedGraphType
  * arraygraph의 인접행렬과 비교 - arraygraph에는 노드개수^2 칸만큼 동적할당 된 칸이 생기는데, 여기는 원하는 노드에만 각각 인접노드(LinkedNode)를 할당해 줄 수 있다.
  * 이 경우, 노드의 개수가 아주 많아지고, 노드간 연결이 적은 경우에는 linkedgraph가 메모리 공간 측면에서 유리해질 수 있다. 
  * arraygraph에서는 간선을 사용하지 않는 노드에도 모두 maxVertexCount(모든 노드의 개수)만큼 메모리가 할당되기 때문이다. 
+ * 
+ * 보완할 내용 : checkVertexValid(LinkedGraph* pGraph, int vertexID)에서 자기 자신을 가르키지 않도록 해야한다!!! 발표 시 피드백 받은 내용 
  */
 
 // 링크드그래프를 생성하는 함수
@@ -43,7 +45,7 @@ int addVertexLG(LinkedGraph* pGraph, int vertexID);
 int addEdgeLG(LinkedGraph* pGraph, int fromVertexID, int toVertexID);
 int addEdgewithWeightLG(LinkedGraph* pGraph, int fromVertexID, int toVertexID, int weight);
 
-// 주어진 vertexID를 확인하여 그게 링크드그래프에서 유효한지 확인(노드 범위 안에 있는 지, 사용되고 있는 노드인지)
+// 주어진 vertexID를 확인하여 그게 링크드그래프에서 유효한지 확인 (노드 범위 안에 있는 지, 사용되고 있는 노드인지)
 int checkVertexValid(LinkedGraph* pGraph, int vertexID);
 
 // 주어진 vertexID의 노드(vertex)를 링크드그래프에서 제거한다 

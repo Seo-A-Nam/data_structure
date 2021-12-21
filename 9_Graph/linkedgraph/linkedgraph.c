@@ -200,6 +200,7 @@ int addEdgewithWeightLG(LinkedGraph* pGraph, int fromVertexID, int toVertexID, i
 // 주어진 vertexID를 확인하여 그게 링크드그래프에서 유효한지 확인(노드 범위 안에 있는 지, 사용되고 있는 노드인지)
 int checkVertexValid(LinkedGraph* pGraph, int vertexID)
 {
+	ListNode *now;
 	if (vertexID < 0 || vertexID > pGraph->maxVertexCount - 1)
 	{
 		printf("[error] Invalid value : vertexID\n");
