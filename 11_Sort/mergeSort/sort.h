@@ -1,0 +1,17 @@
+#ifndef _SORT_
+#define _SORT_
+
+#include "linkedList/linkedlist.h"
+#include "doublylist/doublylist.h"
+
+// =====================  MAIN ============================
+void    displayLl(LinkedList *pList);
+LinkedList *lst_cpy(LinkedList *pList);
+
+// ====================== MERGE SORT ======================
+
+void    	splitHeads(LinkedList *pList, LinkedList *pList_a, LinkedList *pList_b);
+LinkedList  *sort_Merge(LinkedList *merge_a, LinkedList *merge_b);
+LinkedList  *mergeSort(LinkedList *pList);
+
+#endif
