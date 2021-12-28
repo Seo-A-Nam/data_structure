@@ -1,9 +1,8 @@
 #ifndef _DOUBLYLIST_
 #define _DOUBLYLIST_
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <stdio.h>
 
 typedef struct DoublyListNodeType
 {
@@ -14,8 +13,8 @@ typedef struct DoublyListNodeType
 
 typedef struct DoublyListType
 {
-	int	currentElementCount;		// ���� ����� ������ ����
-	DoublyListNode	headerNode;		// ��� ���(Header Node)
+	int	currentElementCount;		// the number of currentElement
+	DoublyListNode	headerNode;		// header Node of DoublyList
 } DoublyList;
 
 DoublyList* createDoublyList();
@@ -26,6 +25,7 @@ void clearDoublyList(DoublyList* pList);
 int getDoublyListLength(DoublyList* pList);
 DoublyListNode* getDLElement(DoublyList* pList, int position);
 void displayDoublyList(DoublyList* pList);
+void reverseDoublyLinkedList(DoublyList *pList);
 
 #endif
 

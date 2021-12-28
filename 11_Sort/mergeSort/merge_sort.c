@@ -1,4 +1,4 @@
-#include "sort.h"
+#include "merge_sort.h"
 
 void    splitHeads(LinkedList *pList, LinkedList *pList_a, LinkedList *pList_b)
 {

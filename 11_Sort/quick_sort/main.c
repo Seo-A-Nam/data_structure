@@ -1,4 +1,4 @@
-#include "sort.h"
+#include "quick_sort.h"
 /*
 * 참고 : 헤더노드는 무조건 값이 0 (값을 사용하지 않는다). 데이터 노드는 헤더노드의 다음부터 시작한다.
 */
@@ -11,7 +11,7 @@ DoublyList *lst_cpy(DoublyList *pList)
     
     for (int i = 0; i < count; i++)
     {
-        addDLElement(pList, pList->currentElementCount, *node);
+        addDLElement(ret, ret->currentElementCount, *node);
         node = node->pRLink;
     }
     return (ret);
@@ -43,23 +43,23 @@ void    displayDl(DoublyList *pList)
 
 void    test()
 {
-	DoublyList	*pList;
-	ListNode	node;
+	DoublyList		*pList;
+	DoublyListNode	node;
 	int			input = 0;
     int         err_flag = 1;
 	int			pos = 0;
 
-	pList = createLinkedList();
+	pList = createDoublyList();
     while (1)
 	{
         printf("\nLIST STATUS ============================================\n");
-        displayLl(pList);
+        displayDl(pList);
         printf("========================================================\n");
-		printf("List option :   1 (Add)   2 (Remove)   3 (Merge sort)\n    4 (Exit)\n");
+		printf("List option :   1 (Add)   2 (Remove)\n   3 (Quick sort)    4 (Exit)\n");
 		scanf(" %d", &input);
         if (input == 4)
         {
-            printf("----------------- TERMINATE THE PROGRAM ----------------\n");
+            printf("\n----------------- TERMINATE THE PROGRAM ----------------\n");
             break;
         }
 		switch (input)
@@ -67,19 +67,20 @@ void    test()
 			case 1:
 				printf("Type the number to insert in a Linkedlist : ");
 				scanf(" %d", &node.data);
-				err_flag = addLLElement(pList, pList->currentElementCount, node);
+				err_flag = addDLElement(pList, pList->currentElementCount, node);
 				break ;
 			case 2:
 				printf("Type the position to delete : ");
 				scanf(" %d", &pos);
-				err_flag = removeLLElement(pList, pos);
+				err_flag = removeDLElement(pList, pos);
 				break ;
 			case 3:
-				printf("====================  MERGED LIST  =====================\n");
-				LinkedList *mergedList = mergeSort(lst_cpy(pList));
-				 // mergeSort 매개인자로 들어간 리스트는 안에서 free()되기 때문에 pList를 카피해서 넣어줌.
-				displayLl(mergedList);
-				deleteLinkedList(mergedList);
+				printf("\n=================== QUICK SORT LIST ====================\n");
+				DoublyList *sortedList = lst_cpy(pList);
+				quick_sort(sortedList, sortedList->headerNode.pRLink, sortedList->headerNode.pLLink);
+				// quicksort의 2번째 인자 pLeft : 일단 리스트의 첫번째 원소부터 시작, 3번째 인자 pivot : 일단 리스트의 맨 마지막 원소부터 시작. 
+				displayDl(sortedList);
+				deleteDoublyList(sortedList);
 				break ;
 			default:
 				printf("[error] Wrong command number! please try again.\n");
@@ -91,7 +92,7 @@ void    test()
             break;
         }
 	}
-    deleteLinkedList(pList);
+    deleteDoublyList(pList);
     return ;
 }
 

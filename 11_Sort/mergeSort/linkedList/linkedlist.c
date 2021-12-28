@@ -126,7 +126,7 @@ int getLinkedListLength(LinkedList* pList)
  {
     ListNode  *curr;
     ListNode  *tmp;
-    
+
     // 메모리 free() 과정 전에, clearLinkedList()를 쓴 사람들이 있었음. 우리도 그걸 추가하는 게 더 바람직할지도 모름.
     if (!pList)
         return ;

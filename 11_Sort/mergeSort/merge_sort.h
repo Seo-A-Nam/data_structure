@@ -1,8 +1,7 @@
-#ifndef _SORT_
-#define _SORT_
+#ifndef _MERGE_SORT_
+#define _MERGE_SORT_
 
 #include "linkedList/linkedlist.h"
-#include "doublylist/doublylist.h"
 
 // =====================  MAIN ============================
 void    displayLl(LinkedList *pList);

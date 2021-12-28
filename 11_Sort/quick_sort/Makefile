@@ -1,7 +1,6 @@
 SRCS	=	$(wildcard doublylist/*.c) \
 			main.c \
 			quick_sort.c \
-			#$(wildcard *.c) \
 
 OBJS	=	$(SRCS:.c=.o)
 
